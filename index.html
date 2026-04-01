@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chương Trình Thi Đấu Võ Cổ Truyền TP.HCM</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1e3a8a; /* Xanh đậm */
+            --secondary-color: #d97706; /* Vàng cam */
+            --bg-color: #f8fafc;
+            --text-main: #334155;
+            --card-bg: #ffffff;
+            --morning-color: #0ea5e9;
+            --afternoon-color: #f59e0b;
+            --evening-color: #4f46e5;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Header / Banner */
+        .header-banner {
+            background: linear-gradient(135deg, var(--primary-color), #2563eb);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(30, 58, 138, 0.2);
+        }
+
+        .header-banner h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.4;
+        }
+
+        .header-banner p {
+            margin: 10px 0 0 0;
+            font-size: 18px;
+            color: #bfdbfe;
+            font-weight: 500;
+        }
+
+        /* Navigation Links (Menu) */
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: var(--card-bg);
+            color: var(--primary-color);
+            padding: 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            border: 2px solid transparent;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            color: var(--secondary-color);
+        }
+
+        /* Location Blocks */
+        .location-block {
+            margin-bottom: 40px;
+        }
+
+        .location-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            background-color: #e0e7ff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .location-header i {
+            color: #dc2626;
+            font-size: 24px;
+            margin-top: 2px;
+        }
+
+        .location-info h3 {
+            margin: 0 0 5px 0;
+            color: var(--primary-color);
+            font-size: 18px;
+        }
+
+        .location-info p {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        /* Schedule Timeline/Cards */
+        .day-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .day-date {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            font-weight: 700;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .day-content {
+            padding: 10px 20px;
+        }
+
+        .time-slot {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px dashed #cbd5e1;
+        }
+
+        .time-slot:last-child {
+            border-bottom: none;
+        }
+
+        .time-badge {
+            flex: 0 0 100px;
+            font-weight: 700;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .time-morning { color: var(--morning-color); }
+        .time-afternoon { color: var(--afternoon-color); }
+        .time-evening { color: var(--evening-color); }
+
+        .task-list {
+            flex: 1;
+            margin: 0;
+            padding-left: 10px;
+            list-style-type: none;
+        }
+
+        .task-list li {
+            margin-bottom: 4px;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .task-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #cbd5e1;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        @media (min-width: 600px) {
+            .day-card {
+                flex-direction: row;
+            }
+            .day-date {
+                flex: 0 0 120px;
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+            }
+            .day-content {
+                flex: 1;
+                padding: 15px 20px;
+            }
+        }
+
+        @media (max-width: 599px) {
+            .time-slot {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .task-list {
+                padding-left: 25px;
+            }
+            .header-banner h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header-banner">
+            <h1>Chương Trình Thi Đấu<br>Hội Thi Thể Dục Thể Thao TP.Hồ Chí Minh</h1>
+            <p>Năm Học 2025 - 2026 • Môn: Võ Cổ Truyền</p>
+        </div>
+
+        <h2 style="color: var(--primary-color); font-size: 18px; margin-bottom: 15px;"><i class="fas fa-compass"></i> Bảng Điều Hướng</h2>
+        <div class="nav-grid">
+            <a href="https://lelevietnam99.github.io/kehoachthigiaithethaohocsinh_thang4_2026/" class="nav-item">
+                <i class="fas fa-bus"></i> Lịch Trình & Đi Lại
+            </a>
+            <a href="https://lelevietnam99.github.io/-kehoachthigiaithethaohocsinh_thang4_2026_DS_Tieuhoc/" class="nav-item">
+                <i class="fas fa-child"></i> Danh Sách Cấp 1
+            </a>
+            <a href="https://lelevietnam99.github.io/-kehoachthigiaithethaohocsinh_thang4_2026_DS_THCS/
+" class="nav-item">
+                <i class="fas fa-user-graduate"></i> Danh Sách Cấp 2
+            </a>
+            <a href="https://lelevietnam99.github.io/-kehoachthigiaithethaohocsinh_thang4_2026_DS_THPT/
+" class="nav-item">
+                <i class="fas fa-user-ninja"></i> Danh Sách Cấp 3
+            </a>
+        </div>
+
+        <hr style="border: 0; height: 1px; background-color: #cbd5e1; margin: 30px 0;">
+
+        <div class="location-block">
+            <div class="location-header">
+                <i class="fas fa-map-marker-alt"></i>
+                <div class="location-info">
+                    <h3>Địa điểm 1: Hội trường Trung tâm HL và TĐ TDTT TP.Hồ Chí Minh</h3>
+                    <p>Số 2-4 Lê Đại Hành, Phường Phú Thọ, Quận 11, TP.Hồ Chí Minh</p>
+                </div>
+            </div>
+
+            <div class="day-card">
+                <div class="day-date">
+                    <i class="far fa-calendar-alt"></i> 06/4
+                </div>
+                <div class="day-content">
+                    <div class="time-slot">
+                        <div class="time-badge time-morning"><i class="fas fa-sun"></i> Sáng: 9h - 11h</div>
+                        <ul class="task-list">
+                            <li>Họp chuyên môn</li>
+                            <li>Bốc thăm</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="location-block">
+            <div class="location-header">
+                <i class="fas fa-map-marker-alt"></i>
+                <div class="location-info">
+                    <h3>Địa điểm 2: Trung tâm cung ứng dịch vụ công Phường Tân Thuận</h3>
+                    <p>504-506 Huỳnh Tấn Phát, Phường Tân Thuận, Quận 7, TP.Hồ Chí Minh</p>
+                </div>
+            </div>
+
+            <div class="day-card">
+                <div class="day-date">
+                    <i class="far fa-calendar-alt"></i> 09/4
+                </div>
+                <div class="day-content">
+                    <div class="time-slot">
+                        <div class="time-badge time-morning"><i class="fas fa-cloud-sun"></i> Sáng: 8h</div>
+                        <ul class="task-list">
+                            <li>Thi đấu Vòng loại nội dung Quyền thuật</li>
+                            <li>Thi đấu Vòng loại đối kháng Cấp II</li>
+                        </ul>
+                    </div>
+                    <div class="time-slot">
+                        <div class="time-badge time-afternoon"><i class="fas fa-sun"></i> Chiều: 14h</div>
+                        <ul class="task-list">
+                            <li>Thi đấu Vòng loại nội dung Quyền thuật</li>
+                            <li>Thi đấu Vòng loại đối kháng Cấp II</li>
+                        </ul>
+                    </div>
+                    <div class="time-slot">
+                        <div class="time-badge time-evening"><i class="fas fa-moon"></i> Tối: 19h</div>
+                        <ul class="task-list">
+                            <li>Thi đấu Vòng loại nội dung Quyền thuật</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="day-card">
+                <div class="day-date">
+                    <i class="far fa-calendar-alt"></i> 10/4
+                </div>
+                <div class="day-content">
+                    <div class="time-slot">
+                        <div class="time-badge time-morning"><i class="fas fa-cloud-sun"></i> Sáng: 8h</div>
+                        <ul class="task-list">
+                            <li>Thi đấu Bán kết nội dung Quyền thuật</li>
+                            <li>Thi đấu Vòng loại đối kháng Cấp II</li>
+                        </ul>
+                    </div>
+                    <div class="time-slot">
+                        <div class="time-badge time-afternoon"><i class="fas fa-sun"></i> Chiều: 14h</div>
+                        <ul class="task-list">
+                            <li>Thi đấu Chung kết nội dung Quyền thuật</li>
+                            <li>Thi đấu Vòng loại đối kháng Cấp II</li>
+                        </ul>
+                    </div>
+                    <div class="time-slot">
+                        <div class="time-badge time-evening"><i class="fas fa-moon"></i> Tối: 19h</div>
+                        <ul class="task-list">
+                            <li>Thi đấu Chung kết nội dung Quyền thuật</li>
+                            <li>Phát huy chương nội dung Quyền thuật</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="day-card">
+                <div class="day-date">
+                    <i class="far fa-calendar-alt"></i> 11/4
+                </div>
+                <div class="day-content">
+                    <div class="time-slot">
+                        <div class="time-badge time-morning"><i class="fas fa-cloud-sun"></i> Sáng: 8h</div>
+                        <ul class="task-list">
+                            <li>Thi đấu Vòng loại nội dung Đối kháng Cấp I, III</li>
+                            <li>Thi đấu Bán kết nội dung Đối kháng Cấp II</li>
+                        </ul>
+                    </div>
+                    <div class="time-slot">
+                        <div class="time-badge time-afternoon"><i class="fas fa-sun"></i> Chiều: 14h</div>
+                        <ul class="task-list">
+                            <li>Thi đấu Vòng loại nội dung Đối kháng Cấp I, III</li>
+                        </ul>
+                    </div>
+                    <div class="time-slot">
+                        <div class="time-badge time-evening"><i class="fas fa-moon"></i> Tối: 19h</div>
+                        <ul class="task-list">
+                            <li>Thi đấu Vòng loại nội dung Đối kháng Cấp I, III</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="day-card">
+                <div class="day-date">
+                    <i class="far fa-calendar-alt"></i> 12/4
+                </div>
+                <div class="day-content">
+                    <div class="time-slot">
+                        <div class="time-badge time-morning"><i class="fas fa-cloud-sun"></i> Sáng: 8h</div>
+                        <ul class="task-list">
+                            <li>Thi đấu Vòng loại nội dung Đối kháng Cấp I, III</li>
+                            <li>Thi đấu Chung kết nội dung Đối kháng Cấp II</li>
+                        </ul>
+                    </div>
+                    <div class="time-slot">
+                        <div class="time-badge time-afternoon"><i class="fas fa-sun"></i> Chiều: 14h</div>
+                        <ul class="task-list">
+                            <li>Thi đấu Vòng loại nội dung Đối kháng Cấp I, III</li>
+                        </ul>
+                    </div>
+                    <div class="time-slot">
+                        <div class="time-badge time-evening"><i class="fas fa-moon"></i> Tối: 19h</div>
+                        <ul class="task-list">
+                            <li>Thi đấu Vòng loại nội dung Đối kháng Cấp I, III</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="day-card">
+                <div class="day-date">
+                    <i class="far fa-calendar-alt"></i> 13/4
+                </div>
+                <div class="day-content">
+                    <div class="time-slot">
+                        <div class="time-badge time-morning"><i class="fas fa-cloud-sun"></i> Sáng: 8h</div>
+                        <ul class="task-list">
+                            <li>Thi đấu Vòng loại nội dung Đối kháng Cấp I, III</li>
+                        </ul>
+                    </div>
+                    <div class="time-slot">
+                        <div class="time-badge time-afternoon"><i class="fas fa-sun"></i> Chiều: 14h</div>
+                        <ul class="task-list">
+                            <li>Thi đấu Bán kết nội dung Đối kháng Cấp I, III</li>
+                        </ul>
+                    </div>
+                    <div class="time-slot">
+                        <div class="time-badge time-evening"><i class="fas fa-moon"></i> Tối: 19h</div>
+                        <ul class="task-list">
+                            <li>Thi đấu Bán kết nội dung Đối kháng Cấp I, III</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="day-card">
+                <div class="day-date">
+                    <i class="far fa-calendar-alt"></i> 14/4
+                </div>
+                <div class="day-content">
+                    <div class="time-slot">
+                        <div class="time-badge time-morning"><i class="fas fa-cloud-sun"></i> Sáng: 8h</div>
+                        <ul class="task-list">
+                            <li>Thi đấu Chung kết nội dung Đối kháng Cấp I, III</li>
+                        </ul>
+                    </div>
+                    <div class="time-slot">
+                        <div class="time-badge time-afternoon"><i class="fas fa-sun"></i> Chiều: 14h</div>
+                        <ul class="task-list">
+                            <li>Thi đấu Chung kết nội dung Đối kháng Cấp I, III</li>
+                            <li>Phát huy chương nội dung Đối kháng</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2026 Quản lý hồ sơ thi đấu. Chúc các VĐV thi đấu đạt thành tích cao!
+        </div>
+    </div>
+
+</body>
+</html>
